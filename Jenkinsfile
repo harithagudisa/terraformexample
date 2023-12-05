@@ -14,15 +14,6 @@ pipeline {
                 '''
             }
         }
-        stage('Plan') {
-            steps {
-                sh'''
-                    ls -ltr
-                    pwd
-                    terraform destroy
-                '''
-            }
-        }
         stage('Approve') {
             steps{
                 input "Shall I apply?"
