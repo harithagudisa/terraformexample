@@ -8,7 +8,7 @@ pipeline {
         stage('Init') {
             steps {
                 sh'''
-                    cd terraformexample
+                    cd ec2
                     ls -ltr
                     pwd
                     terraform init
@@ -20,7 +20,7 @@ pipeline {
                 sh'''
                     ls -ltr
                     pwd
-                    cd terraformexample
+                    cd ec2
                     terraform plan
                 '''
             }
@@ -37,7 +37,7 @@ pipeline {
                 sh '''
                     pwd
                     ls -ltr
-                    cd terraformexample
+                    cd ec2
                     terraform apply -auto-approve
                 '''
             }
