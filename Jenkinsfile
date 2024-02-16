@@ -1,5 +1,8 @@
 pipeline {
     agent { node { label 'AGENT' } }
+    options {
+        ansiColor('xterm')
+    }
 
     stages {
         stage('Init') {
@@ -7,23 +10,29 @@ pipeline {
                 sh'''
                     ls -ltr
                     pwd
-                    terraform Init
-                '''    
+                    terraform init
+                '''
             }
         }
-        stage('Plan') {
-            steps {
-                sh'''
-                    ls -ltr
+        stage('Approve') {
+            steps{
+                input "Shall I apply?"
+            }
+        }
+
+        stage('Apply') {
+            steps{
+                
+                sh '''
                     pwd
-                    terraform plan
-                '''    
+                    ls -ltr
+                    terraform apply -auto-approve
+                '''
             }
         }
-        
     }
-}
-post {
+
+    post { 
         always { 
             echo 'I will always run whether job is success or not'
         }
@@ -34,3 +43,4 @@ post {
             echo 'I will run when failure'
         }
     }
+}
